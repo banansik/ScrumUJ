@@ -4,6 +4,8 @@
 namespace App\Controller;
 
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Template;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -12,14 +14,14 @@ use Symfony\Component\Routing\Annotation\Route;
  * @package App\Controller
  * @Route("/")
  */
-class HelloWorldController
+class IndexController extends AbstractController
 {
     /**
      * @return Response
-     * @Route("/{slug}")
+     * @Route("/hej")
      */
-    public function show($slug)
+    public function show()
     {
-        return new Response(sprintf('hello %s', $slug));
+        return $this->render('info/index.html.twig');
     }
 }

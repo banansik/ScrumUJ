@@ -1,0 +1,36 @@
+{% extends 'info/base.html.twig' %}
+{% block title %}
+{% endblock %}
+
+
+{% block body %}
+{{ parent() }}
+
+ {% include 'info/home.html.twig' %}
+
+
+<div class="page-content">
+    {# First Step#}
+    {% include 'info/first.html.twig' %}
+
+    {# Second Step#}
+    {% include 'info/second.html.twig' %}
+
+    {# Third Step#}
+    {% include 'info/third.html.twig' %}
+
+    {# Four Step#}
+    {% include 'info/four.html.twig' %}
+
+    {#Five Step#}
+    {% include 'info/five.html.twig'  %}
+
+    {# Footer#}
+    {% include 'info/footer.html.twig' %}
+
+</div>
+
+
+
+</body>
+{% endblock %}
