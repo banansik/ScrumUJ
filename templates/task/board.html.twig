@@ -1,0 +1,103 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Task index{% endblock %}
+
+{% block body %}
+    <h1>To Do</h1>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Title</th>
+            <th>Status</th>
+            <th>Need</th>
+            <th>Priority</th>
+            <th>actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for task in tasks %}
+            {% if task.status == "todo" %}
+            <tr>
+                <td><a href="{{ path('task_show', {'id': task.id}) }}">{{ task.title }}</a></td>
+                <td> {{ task.status }}</td>
+                <td>{{ task.need }}</td>
+                <td>{{ task.priority }}</td>
+                <td>
+                    <a href="{{ path('task_show', {'id': task.id}) }}">show</a>
+                    <a href="{{ path('task_edit', {'id': task.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+
+            {% endif %}
+        {% endfor %}
+        </tbody>
+
+    </table>
+    <h2>In progress</h2>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Title</th>
+            <th>Status</th>
+            <th>Need</th>
+            <th>Priority</th>
+            <th>actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for task in tasks %}
+            {% if task.status == "inprog" %}
+            <tr>
+                <td><a href="{{ path('task_show', {'id': task.id}) }}">{{ task.title }}</a></td>
+                <td> {{ task.status }}</td>
+                <td>{{ task.need }}</td>
+                <td>{{ task.priority }}</td>
+                <td>
+                    <a href="{{ path('task_show', {'id': task.id}) }}">show</a>
+                    <a href="{{ path('task_edit', {'id': task.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+
+            {% endif %}
+        {% endfor %}
+        </tbody>
+    </table>
+    <h3>Done</h3>
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Title</th>
+            <th>Status</th>
+            <th>Need</th>
+            <th>Priority</th>
+            <th>actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for task in tasks%}
+        {% if task.status == "done" %}
+            <tr>
+                <td><a href="{{ path('task_show', {'id': task.id}) }}">{{ task.title }}</a></td>
+                <td> {{ task.status }}</td>
+                <td>{{ task.need }}</td>
+                <td>{{ task.priority }}</td>
+                <td>
+                    <a href="{{ path('task_show', {'id': task.id}) }}">show</a>
+                    <a href="{{ path('task_edit', {'id': task.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+
+        {% endif %}
+        {% endfor %}
+
+        </tbody>
+    </table>
+
+
+
+    <a href="{{ path('task_new') }}">Create new</a>
+{% endblock %}

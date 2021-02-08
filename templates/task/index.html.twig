@@ -23,8 +23,8 @@
         {% for task in tasks %}
             <tr>
                 <td>{{ task.id }}</td>
-                <td>{{ task.createdAt ? task.createdAt|date('Y-m-d H:i:s') : '' }}</td>
-                <td>{{ task.updatedAt ? task.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ task.createdAt ? task.createdAt|date('Y-m-d') : '' }}</td>
+                <td>{{ task.updatedAt ? task.updatedAt|date('Y-m-d') : '' }}</td>
                 <td>{{ task.title }}</td>
                 <td>{{ task.status }}</td>
                 <td>{{ task.description }}</td>

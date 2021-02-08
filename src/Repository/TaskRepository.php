@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Task;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -17,6 +18,25 @@ class TaskRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Task::class);
+    }
+
+
+    public function findConnectedWithProject()
+    {
+      $dql = 'SELECT task FROM App\Entity\Task task where project_id = 25';
+      $query = $this->getEntityManager()->createQuery($dql);
+
+      return $query->execute();
+
+    }
+
+    public function search($id)
+    {
+        return $this->createQueryBuilder('task')
+            ->andWhere('task.project = :searchTerm')
+            ->setParameter('searchTerm', $id)
+            ->getQuery()
+            ->execute();
     }
 
     // /**

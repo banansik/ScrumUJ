@@ -17,11 +17,11 @@
             </tr>
             <tr>
                 <th>CreatedAt</th>
-                <td>{{ project.createdAt ? project.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ project.createdAt ? project.createdAt|date('Y-m-d') : '' }}</td>
             </tr>
             <tr>
                 <th>FinalDate</th>
-                <td>{{ project.finalDate ? project.finalDate|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ project.finalDate ? project.finalDate|date('Y-m-d') : '' }}</td>
             </tr>
         </tbody>
     </table>

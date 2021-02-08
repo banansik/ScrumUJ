@@ -42,6 +42,8 @@ class ProjectRepository extends ServiceEntityRepository
     {
         return $queryBuilder ?? $this->createQueryBuilder('project');
     }
+
+
     // /**
     //  * @return Project[] Returns an array of Project objects
     //  */
