@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Project;
 use App\Entity\Task;
 use App\Form\Task1Type;
 use App\Form\TaskType;
@@ -28,7 +29,7 @@ class TaskController extends AbstractController
      */
     public function index(TaskRepository $taskRepository): Response
     {
-        return $this->render('task/index.html.twig', [
+        return $this->render('task/board.html.twig', [
             'tasks' => $taskRepository->findAll(),
         ]);
     }
@@ -63,11 +64,12 @@ class TaskController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $task->setCreatedAt(new \DateTime());
             $task->setUpdatedAt(new \DateTime());
+
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($task);
             $entityManager->flush();
 
-            return $this->redirectToRoute('task_index');
+            return $this->redirectToRoute('project_index');
         }
 
         return $this->render('task/new.html.twig', [
@@ -133,4 +135,82 @@ class TaskController extends AbstractController
 
         return $this->redirectToRoute('task_index');
     }
+
+    /**
+     * @param Request $request
+     * @param Task $task
+     * @Route("{id}/ch", name="change",)
+     */
+    public function changeStatus(Request $request, Task $task)
+    {
+        $form = $this->createForm(Task1Type::class, $task);
+        $form->handleRequest($request);
+
+        if (1) {
+            $task->setStatus('inprog');
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('task_index');
+        }
+
+        return $this->render('task/edit.html.twig', [
+            'task' => $task,
+            'form' => $form->createView(),
+        ]);
+
+
+    }
+
+    /**
+     * @param Request $request
+     * @param Task $task
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     * @Route("{id}/done", name="done",)
+     */
+    public function makeDone(Request $request, Task $task)
+    {
+
+        $form = $this->createForm(Task1Type::class, $task);
+        $form->handleRequest($request);
+
+        if (1) {
+            $task->setStatus('done');
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('task_index');
+        }
+
+        return $this->render('task/edit.html.twig', [
+            'task' => $task,
+            'form' => $form->createView(),
+        ]);
+
+    }
+
+    /**
+     * @param Request $request
+     * @param Task $task
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     * @Route("{id}/todo", name="todo",)
+     */
+    public function makeToDo(Request $request, Task $task)
+    {
+
+        $form = $this->createForm(Task1Type::class, $task);
+        $form->handleRequest($request);
+
+        if (1) {
+            $task->setStatus('todo');
+            $this->getDoctrine()->getManager()->flush();
+
+            return $this->redirectToRoute('task_index');
+        }
+
+        return $this->render('task/edit.html.twig', [
+            'task' => $task,
+            'form' => $form->createView(),
+        ]);
+
+    }
+
 }

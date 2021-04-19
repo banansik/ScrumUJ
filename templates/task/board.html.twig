@@ -3,101 +3,259 @@
 {% block title %}Task index{% endblock %}
 
 {% block body %}
-    <h1>To Do</h1>
 
-    <table class="table">
-        <thead>
-        <tr>
-            <th>Title</th>
-            <th>Status</th>
-            <th>Need</th>
-            <th>Priority</th>
-            <th>actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for task in tasks %}
-            {% if task.status == "todo" %}
-            <tr>
-                <td><a href="{{ path('task_show', {'id': task.id}) }}">{{ task.title }}</a></td>
-                <td> {{ task.status }}</td>
-                <td>{{ task.need }}</td>
-                <td>{{ task.priority }}</td>
-                <td>
-                    <a href="{{ path('task_show', {'id': task.id}) }}">show</a>
-                    <a href="{{ path('task_edit', {'id': task.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
 
-            {% endif %}
-        {% endfor %}
-        </tbody>
 
-    </table>
-    <h2>In progress</h2>
-    <table class="table">
-        <thead>
-        <tr>
-            <th>Title</th>
-            <th>Status</th>
-            <th>Need</th>
-            <th>Priority</th>
-            <th>actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for task in tasks %}
-            {% if task.status == "inprog" %}
-            <tr>
-                <td><a href="{{ path('task_show', {'id': task.id}) }}">{{ task.title }}</a></td>
-                <td> {{ task.status }}</td>
-                <td>{{ task.need }}</td>
-                <td>{{ task.priority }}</td>
-                <td>
-                    <a href="{{ path('task_show', {'id': task.id}) }}">show</a>
-                    <a href="{{ path('task_edit', {'id': task.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
+    <div class="container">
+        <div class="row">
+            <div class="col-sm">
+                <h2>To Do</h2>
 
-            {% endif %}
-        {% endfor %}
-        </tbody>
-    </table>
-    <h3>Done</h3>
-    <table class="table">
-        <thead>
-        <tr>
-            <th>Title</th>
-            <th>Status</th>
-            <th>Need</th>
-            <th>Priority</th>
-            <th>actions</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% for task in tasks%}
-        {% if task.status == "done" %}
-            <tr>
-                <td><a href="{{ path('task_show', {'id': task.id}) }}">{{ task.title }}</a></td>
-                <td> {{ task.status }}</td>
-                <td>{{ task.need }}</td>
-                <td>{{ task.priority }}</td>
-                <td>
-                    <a href="{{ path('task_show', {'id': task.id}) }}">show</a>
-                    <a href="{{ path('task_edit', {'id': task.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
+                <table id="table1" class="table js-rep-log-table">
+                    <thead>
+                    <tr>
+                        <th>Title</th>
 
-        {% endif %}
-        {% endfor %}
+                        <th>Need</th>
+                        <th>Priority</th>
+                        <th>actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for task in tasks %}
+                        {% if task.status == "todo" %}
+                            <tr>
+                                <td><a href="{{ path('task_show', {'id': task.id}) }}">{{ task.title }}</a></td>
 
-        </tbody>
-    </table>
+
+                                <td>{{ task.need }}</td>
+                                <td>{{ task.priority }}</td>
+                                <td>
+                                    <a href={{ path('change',{'id':task.id}) }}>lol</a>
+
+
+
+
+                                    <a href="#"
+                                       class="js-delete-rep-log"
+                                       data-url="{{ path('change',{'id':task.id}) }}"
+                                    >
+                                        <span class="fa fa-arrow-right success"></span>
+                                    </a>
+
+                                </td>
+                            </tr>
+                        {% else %}
+
+                        {% endif %}
+                    {% endfor %}
+                    </tbody>
+
+                </table>
+            </div>
+            <div class="col-sm">
+                <h2>In progress</h2>
+                <table id="table2" class="table js-rep-log-table-in">
+                    <thead>
+                    <tr>
+                        <th>Title</th>
+
+                        <th>Need</th>
+                        <th>Priority</th>
+                        <th>actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for task in tasks %}
+                        {% if task.status == "inprog" %}
+                            <tr>
+                                <td><a href="{{ path('task_show', {'id': task.id}) }}">{{ task.title }}</a></td>
+
+                                <td>{{ task.need }}</td>
+                                <td>{{ task.priority }}</td>
+                                <td>
+                                    <a href="{{ path('task_show', {'id': task.id}) }}">show</a>
+                                    <a href="{{ path('task_edit', {'id': task.id}) }}">edit</a>
+                                    <a href="#"
+                                       class="js-delete-rep-log"
+                                       data-url="{{ path('done',{'id':task.id}) }}"
+                                    >
+                                        <span class="fa fa-arrow-right success"></span>
+                                    </a>
+                                </td>
+                            </tr>
+                        {% else %}
+
+                        {% endif %}
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-sm">
+                <h3>Done</h3>
+                <table id="table3" class="table js-rep-log-table-to">
+                    <thead>
+                    <tr>
+                        <th>Title</th>
+
+                        <th>Need</th>
+                        <th>Priority</th>
+                        <th>actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for task in tasks%}
+                        {% if task.status == "done" %}
+                            <tr>
+                                <td><a href="{{ path('task_show', {'id': task.id}) }}">{{ task.title }}</a></td>
+
+                                <td>{{ task.need }}</td>
+                                <td>{{ task.priority }}</td>
+                                <td>
+                                    <a href="{{ path('task_show', {'id': task.id}) }}">show</a>
+                                    <a href="{{ path('task_edit', {'id': task.id}) }}">edit</a>
+                                    <a href="#"
+                                       class="js-delete-rep-log"
+                                       data-url="{{ path('todo',{'id':task.id}) }}"
+                                    >
+                                        <span class="fa fa-arrow-right success"></span>
+                                    </a>
+                                </td>
+                            </tr>
+                        {% else %}
+
+                        {% endif %}
+                    {% endfor %}
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+
+
 
 
 
     <a href="{{ path('task_new') }}">Create new</a>
+{% endblock %}
+
+{% block javascripts %}}}
+    {{ parent() }}
+
+    <script>
+        $(document).ready(function () {
+            let $table = $('.js-rep-log-table');
+
+            $table.find('.js-delete-rep-log').on('click', function (e) {
+
+                e.preventDefault();
+
+                // $(this).addClass('text-danger');
+                // $(this).find('.fa')
+                //     .removeClass('fa-arrow-right')
+                //     .addClass('fa-spinner')
+                //     .addClass('fa-spin');
+                console.log('lol');
+
+
+                let deleteUrl = $(this).data('url');
+                let $row = $(this).closest('tr');
+                let $usun = $(this).closest('tr').remove().clone();
+                var tabela = $(this).closest('table');
+
+
+
+                $.ajax({
+                    url:deleteUrl,
+                    success:function () {
+
+                        $usun.appendTo('#table2');
+                        $
+
+
+
+
+
+                    }
+                })
+
+            });
+
+            $(this).find('.fa')
+                .removeClass('fa-spinner')
+                .removeClass('fa-spin')
+                .addClass('fa-arrow-right')
+
+
+
+            let $tablo = $('.js-rep-log-table-in');
+
+            $tablo.find('.js-delete-rep-log').on('click', function (e) {
+
+                e.preventDefault();
+
+                // $(this).addClass('text-danger');
+                // $(this).find('.fa')
+                //     .removeClass('fa-arrow-right')
+                //     .addClass('fa-spinner')
+                //     .addClass('fa-spin');
+
+                let deleteUrl = $(this).data('url');
+                let $row = $(this).closest('tr');
+                let $usun = $(this).closest('tr').remove().clone();
+                var tabela = $(this).closest('table');
+
+
+                $.ajax({
+                    url:deleteUrl,
+                    success:function () {
+
+                        $usun.appendTo('#table3');
+
+
+                    }
+                })
+
+            });
+
+            let $tabloo = $('.js-rep-log-table-to');
+
+            $tabloo.find('.js-delete-rep-log').on('click', function (e) {
+
+                e.preventDefault();
+
+                // $(this).addClass('text-danger');
+                // $(this).find('.fa')
+                //     .removeClass('fa-arrow-right')
+                //     .addClass('fa-spinner')
+                //     .addClass('fa-spin');
+
+                let deleteUrl = $(this).data('url');
+                let $row = $(this).closest('tr');
+                let $usun = $(this).closest('tr').remove().clone();
+                var tabela = $(this).closest('table');
+
+                $.ajax({
+                    url:deleteUrl,
+                    success:function () {
+                        $usun.detach();
+
+                        $usun.appendTo('#table1');
+
+                        $usun.fadeIn(1000);
+                        $(this).find('.fa')
+                            .removeClass('fa-spinner')
+                            .addClass('fa-spin')
+                            .addClass('fa-arrow-right')
+                    }
+                })
+
+            });
+
+
+
+        })
+    </script>
 {% endblock %}

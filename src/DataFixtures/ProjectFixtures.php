@@ -1,46 +1,51 @@
 <?php
+/**
+ * Task fixtures.
+ */
 
 namespace App\DataFixtures;
 
 use App\Entity\Project;
-use Doctrine\Bundle\FixturesBundle\Fixture;
+use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 use Doctrine\Persistence\ObjectManager;
-use Faker\Factory;
 
-class ProjectFixtures extends Fixture
+/**
+ * Class TaskFixtures.
+ */
+class ProjectFixtures extends AbstractBaseFixtures implements DependentFixtureInterface
 {
     /**
-     * @var \Faker\Generator
-     */
-    protected $faker;
-
-    /**
-     * Persistence object manager.
+     * Load data.
      *
-     * @var \Doctrine\Persistence\ObjectManager
+     * @param \Doctrine\Persistence\ObjectManager $manager Persistence object manager
      */
-    protected $manager;
-
-    /**
-     * @param ObjectManager $manager
-     */
-    public function load(ObjectManager $manager)
+    public function loadData(ObjectManager $manager): void
     {
-
-        $this ->faker = Factory::create();
-        $this->manager = $manager;
-        // $product = new Product();
-        // $manager->persist($product);
-
-        for ($i=0; $i<20;$i++){
+        $this->createMany(1, 'projects', function ($i) {
             $project = new Project();
             $project->setName($this->faker->word);
             $project->setCreatedAt($this->faker->dateTimeBetween('-10 years','now'));
             $project->setFinalDate($this->faker->dateTimeBetween('now','+10 years'));
-            $manager->persist($project);
-        }
 
+
+
+
+            $project->setAuthor($this->getRandomReference('users'));
+
+            return $project;
+        });
 
         $manager->flush();
+    }
+
+    /**
+     * This method must return an array of fixtures classes
+     * on which the implementing class depends on.
+     *
+     * @return array Array of dependencies
+     */
+    public function getDependencies(): array
+    {
+        return [UserFixtures::class];
     }
 }

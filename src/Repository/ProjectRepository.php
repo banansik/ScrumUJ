@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\Project;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\Persistence\ManagerRegistry;
@@ -41,6 +42,25 @@ class ProjectRepository extends ServiceEntityRepository
     private function getOrCreateQueryBuilder(QueryBuilder $queryBuilder = null): QueryBuilder
     {
         return $queryBuilder ?? $this->createQueryBuilder('project');
+    }
+
+    public function fqueryByAuthor(User $user): QueryBuilder
+    {
+        $queryBuilder = $this->queryAll();
+
+        $queryBuilder->andWhere('project.author = :author')
+            ->setParameter('author', $user);
+
+        return $queryBuilder;
+    }
+
+    public function queryByAuthor(User $user)
+    {
+        return $this->createQueryBuilder('project')
+            ->andWhere('project.author = :searchTerm')
+            ->setParameter('searchTerm', $user)
+            ->getQuery()
+            ->execute();
     }
 
 

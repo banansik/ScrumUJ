@@ -5,36 +5,57 @@
 {% block body %}
     <h1>Project index</h1>
 
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>CreatedAt</th>
-                <th>FinalDate</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for project in projects %}
-            <tr>
-                <td>{{ project.id }}</td>
-                <td>{{ project.name }}</td>
-                <td>{{ project.createdAt ? project.createdAt|date('Y-m-d') : '' }}</td>
-                <td>{{ project.finalDate ? project.finalDate|date('Y-m-d') : '' }}</td>
-                <td>
-                    <a href="{{ path('project_show', {'id': project.id}) }}">show</a>
-                    <a href="{{ path('project_edit', {'id': project.id}) }}">edit</a>
-                    <a href="{{ path('app_task_board', {'id': project.id}) }}">Tasks</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">no records found</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <div class="row">
+        <div class="col-4">
+            {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+                <div>{{ app.user.email }}</div>
+                <div>{{ app.user.id }}</div>
+                <div>
+                    <a href="{{ url('app_logout') }}">{{ 'action_logout'|trans }}</a>
+                </div>
+            {% else %}
+                <div>
+                    <a href="{{ url('app_login') }}">{{ 'action_login'|trans }}</a>
+                </div>
+            {% endif %}        </div>
+        <div class="col-7">
+            <table class="table">
+                <thead>
+                <tr>
+
+                    <th>Name</th>
+                    <th>CreatedAt</th>
+                    <th>FinalDate</th>
+                    <th>actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for project in projects %}
+                    <tr>
+
+                        <td>{{ project.name }}</td>
+                        <td>{{ project.createdAt ? project.createdAt|date('Y-m-d') : '' }}</td>
+                        <td>{{ project.finalDate ? project.finalDate|date('Y-m-d') : '' }}</td>
+                        <td>
+
+                            <a href="{{ path('project_show', {'id': project.id}) }}">show</a>
+                            <a href="{{ path('app_task_board', {'id': project.id}) }}">Tasks</a>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="5">no records found</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="col-1">
+            lol
+        </div>
+    </div>
+
+
 
     <a href="{{ path('project_new') }}">Create new</a>
 {% endblock %}

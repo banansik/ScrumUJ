@@ -39,6 +39,11 @@ class Project
      */
     private $tasks;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=User::class)
+     */
+    private $author;
+
     public function __construct()
     {
         $this->tasks = new ArrayCollection();
@@ -111,6 +116,18 @@ class Project
                 $task->setProject(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getAuthor(): ?User
+    {
+        return $this->author;
+    }
+
+    public function setAuthor(?User $author): self
+    {
+        $this->author = $author;
 
         return $this;
     }

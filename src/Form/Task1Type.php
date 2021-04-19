@@ -32,7 +32,7 @@ class Task1Type extends AbstractType
                     'choice_label' => function ($project) {
                         return $project->getName();
                     },
-                    'label' => 'label_category',
+                    'label' => 'label_project',
                     'placeholder' => 'label_none',
                     'required' => true,
                 ]
